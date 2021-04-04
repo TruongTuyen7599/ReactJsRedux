@@ -14,8 +14,15 @@ class GioHang extends Component {
                 <td>{spGH.maSP}</td>
                 <td>{spGH.tenSP}</td>
                 <td><img width={50} src={spGH.hinhAnh} /></td>
-                <td>{spGH.soLuong}</td>
-                <td>{spGH.giaSP}</td>
+                <td>  <button type="button" name="" id="" class="btn btn-success" onClick={() => {
+                    this.props.tangGiamSoLuong(spGH.maSP, -1);
+                }}>-</button>
+                {spGH.soLuong} 
+                 <button type="button" name="" id="" class="btn btn-success" onClick={() => {
+                    this.props.tangGiamSoLuong(spGH.maSP, 1);
+                }}>+</button></td>
+                <td>{spGH.giaBan}</td>
+                <td> <button type="button" className="btn btn-danger">Xóa</button> </td>
             </tr>
         })
     }
@@ -58,5 +65,20 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        xoaGioHang: (maSPClick) => {
+            console.log('maSPClick', maSPClick);
+        },
+        tangGiamSoLuong: (maSP, soLuong) => {
+            const action = {
+                type: 'TANG_GIAM_SO_LUONG',
+                maSP,
+                soLuong
+            }
+            dispatch(action);
+        }
+    }
+}
 //kết nối giỏ hàng component và redux = > tạo 1 component mới chứa các state của redux
-export default connect(mapStateToProps)(GioHang);
+export default connect(mapStateToProps,mapDispatchToProps)(GioHang);
